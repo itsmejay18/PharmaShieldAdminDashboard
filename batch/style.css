@@ -1,0 +1,83 @@
+/* Batch Management Styles */
+.qr-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.qr-section {
+  text-align: center;
+}
+
+.qr-section h4 {
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.qr-placeholder {
+  width: 150px;
+  height: 150px;
+  background: var(--bg-secondary);
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  transition: all 0.2s ease;
+}
+
+.qr-placeholder:hover {
+  border-color: var(--primary-green);
+  background: rgba(46, 204, 113, 0.05);
+}
+
+.qr-placeholder i {
+  font-size: 3rem;
+  color: var(--primary-green);
+  margin-bottom: 0.5rem;
+}
+
+.qr-placeholder p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.batch-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .qr-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .qr-placeholder {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .qr-placeholder i {
+    font-size: 2rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .batch-actions {
+    flex-wrap: wrap;
+  }
+}

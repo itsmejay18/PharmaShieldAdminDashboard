@@ -1,0 +1,245 @@
+/* Monitoring Specific Styles */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-color);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+  padding-left: 2rem;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -0.5rem;
+  top: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 3px solid var(--bg-primary);
+  z-index: 1;
+}
+
+.timeline-item.created::before { background: var(--info-blue); }
+.timeline-item.transit::before { background: var(--warning-orange); }
+.timeline-item.delivered::before { background: var(--success-green); }
+.timeline-item.received::before { background: var(--primary-green); }
+.timeline-item.dispensed::before { background: var(--primary-green-dark); }
+
+.timeline-content {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.timeline-time {
+  color: var(--text-tertiary);
+  font-size: 0.75rem;
+}
+
+.timeline-description {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.timeline-status {
+  margin-top: 0.5rem;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.alert-filter {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.alert-filter .btn {
+  padding: 0.25rem 0.75rem;
+}
+
+.alert-filter .btn.active {
+  background: var(--primary-green);
+  color: white;
+}
+
+.monitoring-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: var(--radius-md);
+  border-left: 4px solid;
+  background: var(--bg-secondary);
+  transition: all 0.2s ease;
+}
+
+.monitoring-alert:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-sm);
+}
+
+.monitoring-alert.high {
+  border-color: var(--danger-red);
+  background: rgba(220, 38, 38, 0.03);
+}
+
+.monitoring-alert.medium {
+  border-color: var(--warning-orange);
+  background: rgba(245, 158, 11, 0.03);
+}
+
+.monitoring-alert.low {
+  border-color: var(--success-green);
+  background: rgba(16, 185, 129, 0.03);
+}
+
+.alert-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.alert-content {
+  flex: 1;
+}
+
+.alert-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.alert-message {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.alert-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+.alert-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--success-green);
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--success-green);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.auto-refresh {
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline {
+    padding-left: 1rem;
+  }
+  
+  .timeline::before {
+    left: 0.5rem;
+  }
+  
+  .timeline-item {
+    padding-left: 1.5rem;
+  }
+  
+  .timeline-item::before {
+    left: -0.25rem;
+    width: 0.75rem;
+    height: 0.75rem;
+  }
+  
+  .timeline-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .header-actions {
+    flex-wrap: wrap;
+  }
+  
+  .alert-filter {
+    flex-wrap: wrap;
+  }
+}

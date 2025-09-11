@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batch Management - PharmaShield Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2><i class="fas fa-shield-alt"></i> PharmaShield</h2>
+        <p>Admin Dashboard</p>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="../dashboard/dashboard.html" class="nav-item">
+          <i class="fas fa-chart-line"></i>
+          Dashboard
+        </a>
+        <a href="batch.html" class="nav-item active">
+          <i class="fas fa-boxes"></i>
+          Batch Management
+        </a>
+        <a href="../distribution/distribution.html" class="nav-item">
+          <i class="fas fa-truck"></i>
+          Distribution
+        </a>
+        <a href="../monitoring/monitoring.html" class="nav-item">
+          <i class="fas fa-eye"></i>
+          Monitoring
+        </a>
+        <a href="../analytics/analytics.html" class="nav-item">
+          <i class="fas fa-chart-pie"></i>
+          Analytics
+        </a>
+        <a href="../map/maps.html" class="nav-item">
+          <i class="fas fa-globe"></i>
+          Global Map
+        </a>
+        <a href="../pharmacies/pharmacies.html" class="nav-item">
+          <i class="fas fa-store"></i>
+          Pharmacies
+        </a>
+        <a href="../users/users.html" class="nav-item">
+          <i class="fas fa-users"></i>
+          Users
+        </a>
+        <a href="#" class="nav-item logout-btn" style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+          <i class="fas fa-sign-out-alt"></i>
+          Logout
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+          </button>
+          <h1>Batch Management</h1>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-primary" onclick="openAddBatchModal()">
+            <i class="fas fa-plus"></i>
+            Add New Batch
+          </button>
+          <div class="admin-profile">
+            <button class="profile-btn">
+              <i class="fas fa-user-circle"></i>
+              <span>Admin</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="profile-dropdown">
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-user"></i>
+                Profile Settings
+              </a>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-cog"></i>
+                System Settings
+              </a>
+              <a href="#" class="dropdown-item logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content-area">
+        <!-- Batch Table -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Pharmaceutical Batches</h3>
+          </div>
+          <div class="card-body">
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Batch ID</th>
+                    <th>Medicine Name</th>
+                    <th>Lot Number</th>
+                    <th>Expiry Date</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="batchTableBody">
+                  <!-- Table rows will be populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add Batch Modal -->
+  <div id="addBatchModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Add New Batch</h3>
+        <button class="modal-close" onclick="closeModal('addBatchModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="addBatchForm">
+          <div class="form-group">
+            <label class="form-label">Medicine Name</label>
+            <input type="text" class="form-input" id="medicineName" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Lot Number</label>
+            <input type="text" class="form-input" id="lotNumber" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Expiry Date</label>
+            <input type="date" class="form-input" id="expiryDate" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Quantity</label>
+            <input type="number" class="form-input" id="quantity" min="1" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('addBatchModal')">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="addBatch()">Add Batch</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Code Modal -->
+  <div id="qrModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">QR Codes Generated</h3>
+        <button class="modal-close" onclick="closeModal('qrModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="qr-container">
+          <div class="qr-section">
+            <h4>Shipment QR Code</h4>
+            <div class="qr-placeholder" id="shipmentQR">
+              <i class="fas fa-qrcode"></i>
+              <p>Shipment Level Tracking</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="downloadQR('shipment')">
+              <i class="fas fa-download"></i>
+              Download
+            </button>
+          </div>
+          <div class="qr-section">
+            <h4>Unit QR Code</h4>
+            <div class="qr-placeholder" id="unitQR">
+              <i class="fas fa-qrcode"></i>
+              <p>Individual Unit Tracking</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="downloadQR('unit')">
+              <i class="fas fa-download"></i>
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="closeModal('qrModal')">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/dummy-data.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

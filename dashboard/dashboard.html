@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - PharmaShield Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2><i class="fas fa-shield-alt"></i> PharmaShield</h2>
+        <p>Admin Dashboard</p>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item active">
+          <i class="fas fa-chart-line"></i>
+          Dashboard
+        </a>
+        <a href="../batch/batch.html" class="nav-item">
+          <i class="fas fa-boxes"></i>
+          Batch Management
+        </a>
+        <a href="../distribution/distribution.html" class="nav-item">
+          <i class="fas fa-truck"></i>
+          Distribution
+        </a>
+        <a href="../monitoring/monitoring.html" class="nav-item">
+          <i class="fas fa-eye"></i>
+          Monitoring
+        </a>
+        <a href="../analytics/analytics.html" class="nav-item">
+          <i class="fas fa-chart-pie"></i>
+          Analytics
+        </a>
+        <a href="../map/maps.html" class="nav-item">
+          <i class="fas fa-globe"></i>
+          Global Map
+        </a>
+        <a href="../pharmacies/pharmacies.html" class="nav-item">
+          <i class="fas fa-store"></i>
+          Pharmacies
+        </a>
+        <a href="../users/users.html" class="nav-item">
+          <i class="fas fa-users"></i>
+          Users
+        </a>
+        <a href="#" class="nav-item logout-btn" style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+          <i class="fas fa-sign-out-alt"></i>
+          Logout
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+          </button>
+          <h1>Dashboard Overview</h1>
+        </div>
+        <div class="topbar-right">
+          <div class="admin-profile">
+            <button class="profile-btn">
+              <i class="fas fa-user-circle"></i>
+              <span>Admin</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="profile-dropdown">
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-user"></i>
+                Profile Settings
+              </a>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-cog"></i>
+                System Settings
+              </a>
+              <a href="#" class="dropdown-item logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content-area">
+        <!-- Summary Stats -->
+        <div class="grid grid-cols-4 mb-6">
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-icon green">
+                <i class="fas fa-boxes"></i>
+              </div>
+            </div>
+            <div class="stat-value" id="totalBatches">0</div>
+            <div class="stat-label">Total Batches</div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>12% from last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-icon blue">
+                <i class="fas fa-truck"></i>
+              </div>
+            </div>
+            <div class="stat-value" id="activeShipments">0</div>
+            <div class="stat-label">Active Shipments</div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>8% from last week</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-icon orange">
+                <i class="fas fa-store"></i>
+              </div>
+            </div>
+            <div class="stat-value" id="totalPharmacies">0</div>
+            <div class="stat-label">Registered Pharmacies</div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>5% from last month</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-icon red">
+                <i class="fas fa-exclamation-triangle"></i>
+              </div>
+            </div>
+            <div class="stat-value" id="flaggedIncidents">0</div>
+            <div class="stat-label">Flagged Incidents</div>
+            <div class="stat-change negative">
+              <i class="fas fa-arrow-down"></i>
+              <span>3% from last week</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="grid grid-cols-2 mb-6">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Recent Scan Activity</h3>
+            </div>
+            <div class="card-body">
+              <canvas id="scanChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Scan Status Distribution</h3>
+            </div>
+            <div class="card-body">
+              <canvas id="statusChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Quick Actions</h3>
+          </div>
+          <div class="card-body">
+            <div class="grid grid-cols-4">
+              <a href="../batch/batch.html" class="quick-action-card">
+                <div class="quick-action-icon green">
+                  <i class="fas fa-plus"></i>
+                </div>
+                <h4>Add New Batch</h4>
+                <p>Create and register new pharmaceutical batch</p>
+              </a>
+
+              <a href="../distribution/distribution.html" class="quick-action-card">
+                <div class="quick-action-icon blue">
+                  <i class="fas fa-shipping-fast"></i>
+                </div>
+                <h4>Create Shipment</h4>
+                <p>Assign batch to pharmacy for distribution</p>
+              </a>
+
+              <a href="../monitoring/monitoring.html" class="quick-action-card">
+                <div class="quick-action-icon orange">
+                  <i class="fas fa-eye"></i>
+                </div>
+                <h4>Monitor Activity</h4>
+                <p>View real-time scanning and alerts</p>
+              </a>
+
+              <a href="../analytics/analytics.html" class="quick-action-card">
+                <div class="quick-action-icon red">
+                  <i class="fas fa-chart-bar"></i>
+                </div>
+                <h4>View Analytics</h4>
+                <p>Detailed reports and insights</p>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Alerts -->
+        <div class="card mt-6">
+          <div class="card-header">
+            <h3 class="card-title">Recent Alerts</h3>
+          </div>
+          <div class="card-body">
+            <div id="recentAlerts">
+              <!-- Alerts will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/dummy-data.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/libs/chart.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

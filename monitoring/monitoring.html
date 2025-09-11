@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-time Monitoring - PharmaShield Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2><i class="fas fa-shield-alt"></i> PharmaShield</h2>
+        <p>Admin Dashboard</p>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="../dashboard/dashboard.html" class="nav-item">
+          <i class="fas fa-chart-line"></i>
+          Dashboard
+        </a>
+        <a href="../batch/batch.html" class="nav-item">
+          <i class="fas fa-boxes"></i>
+          Batch Management
+        </a>
+        <a href="../distribution/distribution.html" class="nav-item">
+          <i class="fas fa-truck"></i>
+          Distribution
+        </a>
+        <a href="monitoring.html" class="nav-item active">
+          <i class="fas fa-eye"></i>
+          Monitoring
+        </a>
+        <a href="../analytics/analytics.html" class="nav-item">
+          <i class="fas fa-chart-pie"></i>
+          Analytics
+        </a>
+        <a href="../map/maps.html" class="nav-item">
+          <i class="fas fa-globe"></i>
+          Global Map
+        </a>
+        <a href="../pharmacies/pharmacies.html" class="nav-item">
+          <i class="fas fa-store"></i>
+          Pharmacies
+        </a>
+        <a href="../users/users.html" class="nav-item">
+          <i class="fas fa-users"></i>
+          Users
+        </a>
+        <a href="#" class="nav-item logout-btn" style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1rem;">
+          <i class="fas fa-sign-out-alt"></i>
+          Logout
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+          </button>
+          <h1>Real-time Monitoring</h1>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-primary" onclick="refreshMonitoring()" id="refreshBtn">
+            <i class="fas fa-sync-alt"></i>
+            Auto Refresh: ON
+          </button>
+          <div class="admin-profile">
+            <button class="profile-btn">
+              <i class="fas fa-user-circle"></i>
+              <span>Admin</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="profile-dropdown">
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-user"></i>
+                Profile Settings
+              </a>
+              <a href="#" class="dropdown-item">
+                <i class="fas fa-cog"></i>
+                System Settings
+              </a>
+              <a href="#" class="dropdown-item logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content-area">
+        <!-- Live Stats -->
+        <div class="grid grid-cols-4 mb-6">
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-icon green">
+                <i class="fas fa-eye"></i>
+              </div>
+            </div>
+            <div class="stat-value" id="liveScans">0</div>
+            <div class="stat-label">Live Scans Today</div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span id="scanTrend">+15%</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-icon blue">
+                <i class="fas fa-truck"></i>
+              </div>
+            </div>
+            <div class="stat-value" id="activeShipments">0</div>
+            <div class="stat-label">Active Shipments</div>
+            <div class="stat-change positive">
+              <i class="fas fa-arrow-up"></i>
+              <span>+3 from yesterday</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-icon orange">
+                <i class="fas fa-exclamation-triangle"></i>
+              </div>
+            </div>
+            <div class="stat-value" id="pendingAlerts">0</div>
+            <div class="stat-label">Pending Alerts</div>
+            <div class="stat-change negative">
+              <i class="fas fa-arrow-down"></i>
+              <span>-2 from last hour</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <div class="stat-icon red">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+            </div>
+            <div class="stat-value">99.8%</div>
+            <div class="stat-label">System Uptime</div>
+            <div class="stat-change positive">
+              <i class="fas fa-check"></i>
+              <span>Optimal</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shipment Timeline -->
+        <div class="card mb-6">
+          <div class="card-header">
+            <h3 class="card-title">Shipment Status Timeline</h3>
+            <div class="header-actions">
+              <button class="btn btn-sm btn-secondary" onclick="filterTimeline('all')">All</button>
+              <button class="btn btn-sm btn-secondary" onclick="filterTimeline('transit')">In Transit</button>
+              <button class="btn btn-sm btn-secondary" onclick="filterTimeline('delivered')">Delivered</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="timeline" id="shipmentTimeline">
+              <!-- Timeline items will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Alerts Panel -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Security Alerts</h3>
+            <div class="header-actions">
+              <div class="alert-filter">
+                <button class="btn btn-sm btn-secondary active" onclick="filterAlerts('all')">All</button>
+                <button class="btn btn-sm btn-danger" onclick="filterAlerts('high')">High</button>
+                <button class="btn btn-sm btn-warning" onclick="filterAlerts('medium')">Medium</button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div id="alertsList">
+              <!-- Alerts will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/dummy-data.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
