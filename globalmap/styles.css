@@ -1,0 +1,66 @@
+/* Global Map Styles */
+#map { 
+  height: 750px; 
+}
+.scan-popup {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* default: 2 columns */
+  gap: 9px;
+  align-items: center;
+
+  min-width: 200px;  /* smaller minimum so it doesn’t force width */
+  max-width: 450px;  /* cap so it doesn’t grow too wide */
+}
+
+/* Header spans all columns */
+.scan-header {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Each item stacks dot + label+count */
+.scan-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.scan-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.scan-text {
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* colors */
+.scan-valid     { background: #0a9e72; }
+.scan-duplicate { background: #f39c12; }
+.scan-expired   { background: #e74c3c; }
+.scan-suspicious{ background: #9b59b6; }
+
+.scan-count {
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+/* On larger popups, allow 4 columns */
+@media (min-width: 500px) {
+  .scan-popup {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
